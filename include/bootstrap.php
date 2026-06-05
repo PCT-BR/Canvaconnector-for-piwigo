@@ -56,6 +56,29 @@ function canva_connector_require_admin(): void
   }
 }
 
+function canva_connector_csrf_token(): string
+{
+  if (session_status() !== PHP_SESSION_ACTIVE && !headers_sent()) {
+    @session_start();
+  }
+
+  if (empty($_SESSION['canva_connector_csrf'])) {
+    $_SESSION['canva_connector_csrf'] = bin2hex(random_bytes(16));
+  }
+
+  return (string) $_SESSION['canva_connector_csrf'];
+}
+
+function canva_connector_verify_csrf(): void
+{
+  $posted = (string) ($_POST['csrf_token'] ?? '');
+  if (!$posted || !hash_equals(canva_connector_csrf_token(), $posted)) {
+    http_response_code(400);
+    echo 'Invalid request token.';
+    exit;
+  }
+}
+
 function canva_connector_base_url(): string
 {
   $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
@@ -135,8 +158,6 @@ function canva_connector_current_token(): array
   $token = '';
   if (preg_match('/Bearer\s+(.+)/i', $header, $matches)) {
     $token = trim($matches[1]);
-  } elseif (!empty($_GET['token'])) {
-    $token = (string) $_GET['token'];
   }
 
   if (!$token) {

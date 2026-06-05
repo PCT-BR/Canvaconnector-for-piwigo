@@ -3,8 +3,8 @@
 Plugin Name: Canva Connector
 Version: 0.1.0
 Description: Connects a Piwigo gallery to the Canva Piwigo Media app without sharing Piwigo API keys with a central backend.
-Plugin URI: https://github.com/piwigo
-Author: Piwigo Media
+Plugin URI: https://github.com/PCT-BR/Canvaconnector-for-piwigo
+Author: PCT-BR
 */
 
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');

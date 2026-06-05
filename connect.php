@@ -6,6 +6,8 @@ global $user;
 
 $new_token = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  canva_connector_verify_csrf();
+
   if (isset($_POST['authorize'])) {
     $label = trim($_POST['label'] ?? 'Canva Piwigo Media');
     $new_token = canva_connector_generate_token($label, (int) ($user['id'] ?? 0));
@@ -16,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $tokens = canva_connector_read_tokens();
 $base_url = canva_connector_base_url();
+$csrf_token = canva_connector_csrf_token();
 ?>
 <!doctype html>
 <html lang="en">
@@ -68,6 +71,11 @@ $base_url = canva_connector_base_url();
     <p>Canva Piwigo Media will not receive your Piwigo username, password, or Piwigo API keys.</p>
     <p>You can revoke this token here at any time.</p>
     <form method="post">
+      <input
+        type="hidden"
+        name="csrf_token"
+        value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>"
+      >
       <label>
         Token label
         <input name="label" value="Canva Piwigo Media" maxlength="80">
@@ -98,7 +106,19 @@ $base_url = canva_connector_base_url();
             <td>
               <?php if (empty($token['revoked_at'])): ?>
                 <form method="post">
-                  <button class="secondary" type="submit" name="revoke" value="<?php echo htmlspecialchars($token['id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">Revoke</button>
+                  <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="<?php echo htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8'); ?>"
+                  >
+                  <button
+                    class="secondary"
+                    type="submit"
+                    name="revoke"
+                    value="<?php echo htmlspecialchars($token['id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
+                  >
+                    Revoke
+                  </button>
                 </form>
               <?php endif; ?>
             </td>
