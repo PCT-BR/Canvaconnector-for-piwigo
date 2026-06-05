@@ -39,3 +39,20 @@ The token does not expose your Piwigo password or Piwigo API keys.
 ## Revoke access
 
 Open `connect.php` again and click **Revoke** for the token.
+
+## Canva listing links
+
+If GitHub Pages is enabled from `main / docs`, use:
+
+- Website: `https://pct-br.github.io/Canvaconnector-for-piwigo/`
+- Terms: `https://pct-br.github.io/Canvaconnector-for-piwigo/terms-and-conditions.html`
+- Privacy policy: `https://pct-br.github.io/Canvaconnector-for-piwigo/privacy-policy.html`
+- Support: `https://pct-br.github.io/Canvaconnector-for-piwigo/support.html`
+
+## Reviewer note
+
+Piwigo is self-hosted software with user-controlled domains. To avoid routing
+user media or Piwigo credentials through a central third-party service, this app
+uses an open-source connector plugin installed on the user's own Piwigo instance.
+The connector generates a local revocable token after the Piwigo administrator
+reviews and accepts the requested access.
