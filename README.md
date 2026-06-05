@@ -11,10 +11,10 @@ Upload this folder to:
 <piwigo-root>/plugins/canva_connector
 ```
 
-Then open:
+Then go to the Piwigo administration area and open:
 
 ```text
-https://your-piwigo.example.com/plugins/canva_connector/connect.php
+Plugins > Canva Connector
 ```
 
 while logged in as a Piwigo administrator.
@@ -38,7 +38,7 @@ The token does not expose your Piwigo password or Piwigo API keys.
 
 ## Revoke access
 
-Open `connect.php` again and click **Revoke** for the token.
+Open **Plugins > Canva Connector** again and click **Revoke** for the token.
 
 ## Related Canva app
 
